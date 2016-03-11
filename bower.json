@@ -1,21 +1,19 @@
 {
   "name": "ipfs-upload",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "authors": [
     "Stefaan Ponnet <stefaan@ponnet.com>"
   ],
-  "description": "An element wrapping web3js + lightwallet functionalities.",
+  "description": "An upload element for IPFS",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
-    "ethereum",
-    "lightwallet",
-    "web3js"
+    "ipfs"
   ],
-  "main": "web3-wallet.html",
+  "main": "ipfs-upload.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/sponnet/web3-wallet/",
+  "homepage": "https://github.com/sponnet/ipfs-upload/",
   "ignore": [
     "/.*",
     "/test/",
@@ -23,10 +21,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
-    "web3": "^0.15.2",
-    "eth-lightwallet": "https://github.com/ConsenSys/eth-lightwallet.git#^2.2.2",
-    "hooked-web3-provider": "https://github.com/ConsenSys/hooked-web3-provider.git",
-    "iron-localstorage": "PolymerElements/iron-localstorage#^1.0.5"
+    "js-ipfs-api": "https://github.com/ipfs/js-ipfs-api.git#^2.13.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
