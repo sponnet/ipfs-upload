@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
   <script src="../js-ipfs-api/dist/ipfsapi.min.js"></script>
 <!--
-An element providing a solution to no problem in particular.
+Upload files to IPFS. Currently requires an IPFS node ( local or remote )
 
 
 Example:
@@ -27,20 +27,9 @@ Example:
       box-sizing: border-box;
     }
 
-    .author img {
-      float: left;
-      margin-right: 5px;
-      max-height: 100px;
-      max-width: 100px;
-    }
-    #dropArea {
-      text-align: center;
-      @apply(--file-upload-drop-area);
-    }    
   </style>
 
   <template>
-    <h1>&lt;ipfs-upload&gt;</h1>
     <content></content>
     <input type="file" id="fileInput" on-change="_fileChange" multiple="{{multi}}" accept="{{accept}}">
   </template>
@@ -56,13 +45,12 @@ Example:
     properties: {
 
       /**
-       * `fancy` indicates that the element should don a monocle and tophat,
-       * while checking its pocket watch.
+       * `host` the host to connect to.
        */
-      fancy: Boolean,
+     
       host: {
         type: String,
-        value: "localhost"
+        value: "/ip4/127.0.0.1/tcp/5001"
       },
 
       /**
@@ -73,11 +61,7 @@ Example:
         value: false
       },
 
-
-
-
-
-  /**
+      /**
        * `accept` is the set of comma separated file extensions or mime types
        * to filter as accepted.
       */
@@ -85,6 +69,14 @@ Example:
         type: String,
         value: ""
       },
+
+      /**
+       * `hash` is an array of hashes of the files that were uploaded.
+      */
+      hash: {
+        type: Array,
+        notify: true
+      }
 
 
 
@@ -95,26 +87,7 @@ Example:
     // Element Lifecycle
 
     ready: function() {
-      // `ready` is called after all elements have been configured, but
-      // propagates bottom-up. This element's children are ready, but parents
-      // are not.
-      //
-      // This is the point where you should make modifications to the DOM (when
-      // necessary), or kick off any processes the element wants to perform.
-      this.ipfs = window.ipfsAPI('localhost', '5001');
-
-
-this.ipfs.add([new this.ipfs.Buffer("sponnietube menneke")], function(err, res) {
-    if(err || !res) return console.error(err)
-
-    res.forEach(function(file) {
-        console.log(file.Hash)
-        console.log(file.Name)
-    })
-})
-      
-      
-
+      this.ipfs = window.ipfsAPI(this.host);
     },
 
     attached: function() {
@@ -133,41 +106,18 @@ this.ipfs.add([new this.ipfs.Buffer("sponnietube menneke")], function(err, res) 
       // Use this to clean up anything you did in `attached`.
     },
 
-    // Element Behavior
-
-    /**
-     * The `seed-element-lasers` event is fired whenever `fireLasers` is called.
-     *
-     * @event seed-element-lasers
-     * @detail {{sound: String}}
-     */
- 
-
 
   _fileChange: function(e) {
     var self = this;
     var length = e.target.files.length;
     for (var i = 0; i < length; i++) {
       var file = e.target.files[i];
-      //file.progress = 0;
-      //file.error = false;
-      //file.complete = false;
-      //        this.push("files", file);
-      //        this.uploadFile(file);
-      console.log(file);
-
-
       var reader = new FileReader();
-
       // If we use onloadend, we need to check the readyState.
       reader.onloadend = function(evt) {
         if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-
-
           self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
-           
             if (err || !res) return console.error(err)
-
             res.forEach(function(file) {
               console.log(file.Hash)
               console.log(file.Name)
@@ -175,21 +125,11 @@ this.ipfs.add([new this.ipfs.Buffer("sponnietube menneke")], function(err, res) 
               self.ipfs.block.get(file.Hash, function(err, res) {
                 console.log('hash', file.Hash, 'block received', res);
               });
-
-
-
             })
           })
-
-
-
         }
       };
-
       reader.readAsBinaryString(file);
-
-
-
     }
   },
 
