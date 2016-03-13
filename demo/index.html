@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>web3-wallet</title>
+  <title>ipfs-upload</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../paper-styles/demo-pages.html">
   <link rel="import" href="../ipfs-upload.html"></head>
@@ -20,12 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <p>
     An example of
-    <code>&lt;web3-wallet&gt;</code>
+    <code>&lt;ipfs-upload&gt;</code>
   </p>
 
   <template is="dom-bind" id="app">
 
-    <ipfs-upload></ipfs-upload>
+    <ipfs-upload multi hashes="{{hashes}}"></ipfs-upload>
+     <template is="dom-repeat" items="{{hashes}}">
+        <div>Hash: <span>{{item}}</span></div>
+    </template>
 
   </template>
 
@@ -34,10 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     (function(document) {
       'use strict';
       var app = document.querySelector('#app');
-      app.host = "https://eth1.augur.net";
-      app.prettyprint = function(a){
-        return JSON.stringify(a);
-      }
+
     })(document);
 
   </script>

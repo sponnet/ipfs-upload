@@ -71,15 +71,13 @@ Example:
       },
 
       /**
-       * `hash` is an array of hashes of the files that were uploaded.
+       * `hashes` is an array of hashes of the files that were uploaded.
       */
-      hash: {
+      hashes: {
         type: Array,
-        notify: true
+        notify: true,
+        value:[]
       }
-
-
-
     },
 
 
@@ -118,18 +116,20 @@ Example:
         if (evt.target.readyState == FileReader.DONE) { // DONE == 2
           self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
             if (err || !res) return console.error(err)
-            res.forEach(function(file) {
-              console.log(file.Hash)
-              console.log(file.Name)
 
-              self.ipfs.block.get(file.Hash, function(err, res) {
-                console.log('hash', file.Hash, 'block received', res);
-              });
+            res.forEach(function(file) {
+              self.hashes.push({hash:file.Hash});
+//              console.log(file.Hash)
+//              console.log(file.Name)
+
+//              self.ipfs.block.get(file.Hash, function(err, res) {
+//                console.log('hash', file.Hash, 'block received', res);
+//              });
             })
           })
         }
       };
-      reader.readAsBinaryString(file);
+      reader.readAsArrayBuffer(file);
     }
   },
 
