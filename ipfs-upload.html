@@ -118,13 +118,9 @@ Example:
             if (err || !res) return console.error(err)
 
             res.forEach(function(file) {
-              self.hashes.push({hash:file.Hash});
-//              console.log(file.Hash)
-//              console.log(file.Name)
-
-//              self.ipfs.block.get(file.Hash, function(err, res) {
-//                console.log('hash', file.Hash, 'block received', res);
-//              });
+              self.push('hashes', {
+                hash: file.Hash
+              });
             })
           })
         }

@@ -26,8 +26,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template is="dom-bind" id="app">
 
     <ipfs-upload multi hashes="{{hashes}}"></ipfs-upload>
+    <span>{{hashes}}</span>
      <template is="dom-repeat" items="{{hashes}}">
-        <div>Hash: <span>{{item}}</span></div>
+      <div>Hash: <span>{{item.hash}}</span><a href="https://gateway.ipfs.io/ipfs/{{item.hash}}">view</a></div>
     </template>
 
   </template>
