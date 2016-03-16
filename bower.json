@@ -1,6 +1,6 @@
 {
   "name": "ipfs-upload",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "authors": [
     "Stefaan Ponnet <stefaan@ponnet.com>"
   ],
@@ -9,7 +9,8 @@
     "web-component",
     "web-components",
     "polymer",
-    "ipfs"
+    "ipfs",
+    "js-ipfs-api"
   ],
   "main": "ipfs-upload.html",
   "license": "http://polymer.github.io/LICENSE.txt",
