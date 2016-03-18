@@ -24,13 +24,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </p>
 
   <template is="dom-bind" id="app">
-
-    <ipfs-upload multi hashes="{{hashes}}"></ipfs-upload>
-    <span>{{hashes}}</span>
-     <template is="dom-repeat" items="{{hashes}}">
-      <div>Hash: <span>{{item.hash}}</span><a href="https://gateway.ipfs.io/ipfs/{{item.hash}}">view</a></div>
+    <h2>Single file upload</h2>
+    <ipfs-upload hash="{{hash}}"></ipfs-upload>
+    <template is="dom-if" if="{{hash}}">
+      <div>
+        Hash:
+        <span>{{hash.hash}}</span>
+        <a href="https://gateway.ipfs.io/ipfs/{{hash.hash}}">view</a>
+      </div>
     </template>
-
+    <h2>Multi file upload</h2>
+    <ipfs-upload multi hashes="{{hashes2}}"></ipfs-upload>
+    <template is="dom-repeat" items="{{hashes2}}">
+      <div>
+        Hash:
+        <span>{{item.hash}}</span>
+        <a href="https://gateway.ipfs.io/ipfs/{{item.hash}}">view</a>
+      </div>
+    </template>
   </template>
 
   <script>

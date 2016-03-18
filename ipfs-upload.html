@@ -85,7 +85,15 @@ Example:
       },
 
       /**
-       * `hashes` is an array of hashes of the files that were uploaded.
+       * `hashes` is an array of hashes of the files that were uploaded. This property is filled in when using the multi attribute.
+      */
+      hash: {
+        type: String,
+        notify: true
+      },
+
+      /**
+       * `hash` is the IPFS hash of the uploaded file that were uploaded when not using the multi attribute.
       */
       hashes: {
         type: Array,
@@ -132,31 +140,35 @@ Example:
       // Use this to clean up anything you did in `attached`.
     },
 
+    _fileChange: function(e) {
+      var self = this;
+      var length = e.target.files.length;
+      for (var i = 0; i < length; i++) {
+        var file = e.target.files[i];
+        var reader = new FileReader();
+        // If we use onloadend, we need to check the readyState.
+        reader.onloadend = function(evt) {
+          if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+            self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
+              if (err || !res) return console.error(err)
 
-  _fileChange: function(e) {
-    var self = this;
-    var length = e.target.files.length;
-    for (var i = 0; i < length; i++) {
-      var file = e.target.files[i];
-      var reader = new FileReader();
-      // If we use onloadend, we need to check the readyState.
-      reader.onloadend = function(evt) {
-        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-          self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
-            if (err || !res) return console.error(err)
-
-            res.forEach(function(file) {
-              self.push('hashes', {
-                hash: file.Hash
-              });
+              res.forEach(function(file) {
+                if (self.multi) {
+                  self.push('hashes', {
+                    hash: file.Hash
+                  });
+                } else {
+                  self.hash = {
+                    hash: file.Hash
+                  };
+                }
+              })
             })
-          })
-        }
-      };
-      reader.readAsArrayBuffer(file);
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
     }
-  },
-
 });
 
 </script>
