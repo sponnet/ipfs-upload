@@ -151,19 +151,26 @@ Example:
         // If we use onloadend, we need to check the readyState.
         reader.onloadend = function(evt) {
           if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+            self.fire('upload-started',file);
             self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
-              if (err || !res) return console.error(err)
+              if (err || !res){
+                return self.fire('upload-error',err);
+              }
 
-              res.forEach(function(file) {
+              res.forEach(function(ipfsfile) {
                 if (self.multi) {
                   self.push('hashes', {
-                    hash: file.Hash
+                    hash: ipfsfile.Hash
                   });
                 } else {
                   self.hash = {
-                    hash: file.Hash
+                    hash: ipfsfile.Hash
                   };
                 }
+                self.fire('ipfs-hash-received', {
+                  file: file,
+                  hash: ipfsfile.Hash
+                });
               })
             })
           }
