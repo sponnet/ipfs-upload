@@ -49,12 +49,16 @@ Example:
 
     is: 'ipfs-upload',
 
+    listeners: {
+      tap: '_fileinputclicked'
+    },
+
     properties: {
 
       /**
        * `host` the host to connect to.
        */
-     
+
       host: {
         type: String,
         value: "/ip4/127.0.0.1/tcp/5001"
@@ -124,6 +128,10 @@ Example:
         this.$.fileinput.style.display = "none";
       }
 
+    },
+
+    _fileinputclicked: function(){
+      this.$.fileinput.click();
     },
 
     attached: function() {
