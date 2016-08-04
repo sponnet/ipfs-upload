@@ -1,6 +1,6 @@
 {
   "name": "ipfs-upload",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "authors": [
     "Stefaan Ponnet <stefaan@ponnet.com>"
   ],
@@ -14,7 +14,7 @@
   ],
   "main": "ipfs-upload.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/sponnet/ipfs-upload/",
+  "homepage": "https://github.com/locals-world/ipfs-upload/",
   "ignore": [
     "/.*",
     "/test/",
