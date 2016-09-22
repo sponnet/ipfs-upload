@@ -180,7 +180,7 @@ Example:
     },
     // Add a string to IPFS - calls cb when done
     add : function(data,cb){
-      var b = new Buffer(data);
+      var b = new this.ipfs.Buffer(data);
       this.ipfs.add(b, function(err, res) {
           if (cb) cb(err,res);
       });

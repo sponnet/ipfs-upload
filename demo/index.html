@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template is="dom-bind" id="app">
     <h2>Single file upload</h2>
-    <ipfs-upload hash="{{hash}}"></ipfs-upload>
+    <ipfs-upload host="/ip4/109.123.70.141/tcp/5001" hash="{{hash}}"></ipfs-upload>
     <template is="dom-if" if="{{hash}}">
       <div>
         Hash:
