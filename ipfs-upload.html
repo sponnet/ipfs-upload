@@ -49,6 +49,10 @@ Example:
 
     is: 'ipfs-upload',
 
+    listeners: {
+      tap: '_fileinputclicked'
+    },
+
     properties: {
 
       /**
@@ -184,7 +188,11 @@ Example:
       this.ipfs.add(b, function(err, res) {
           if (cb) cb(err,res);
       });
-    }
+    },
+    
+    _fileinputclicked: function(){
+      this.$.fileinput.click();
+    },
 });
 
 </script>
