@@ -1,6 +1,6 @@
 {
   "name": "ipfs-upload",
-  "version": "0.0.14",
+  "version": "0.0.19",
   "authors": [
     "Stefaan Ponnet <stefaan@ponnet.com>"
   ],
@@ -27,5 +27,8 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "*"
+  },
+  "resolutions": {
+    "js-ipfs-api": "^6.0.1"
   }
 }
