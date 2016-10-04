@@ -61,7 +61,8 @@ Example:
      
       host: {
         type: String,
-        value: "/ip4/127.0.0.1/tcp/5001"
+        //value: '/ip4/127.0.0.1/tcp/5001',
+        observer : '_host'
       },
 
       /**
@@ -122,12 +123,16 @@ Example:
     // Element Lifecycle
 
     ready: function() {
-      this.ipfs = window.ipfsAPI(this.host);
 
       if (this.hidefileinput) {
         this.$.fileinput.style.display = "none";
       }
 
+    },
+
+    _host: function(){
+      this.ipfs = window.ipfsAPI(this.host);
+      this.baseurl = 'https://' + this.host + ':8080/ipfs/'; 
     },
 
     attached: function() {
@@ -147,6 +152,9 @@ Example:
     },
 
     _fileChange: function(e) {
+      if (!this.ipfs){
+        return;
+      }
       var self = this;
       var length = e.target.files.length;
       for (var i = 0; i < length; i++) {
@@ -154,6 +162,7 @@ Example:
         var reader = new FileReader();
         // If we use onloadend, we need to check the readyState.
         reader.onloadend = function(evt) {
+          debugger;
           if (evt.target.readyState == FileReader.DONE) { // DONE == 2
             self.fire('upload-started',file);
             self.ipfs.add([new self.ipfs.Buffer(evt.target.result)], function(err, res) {
@@ -189,7 +198,11 @@ Example:
           if (cb) cb(err,res);
       });
     },
-    
+
+    url: function(hash){
+      return this.baseurl + hash;
+    },
+
     _fileinputclicked: function(){
       this.$.fileinput.click();
     },
